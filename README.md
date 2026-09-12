@@ -1,37 +1,32 @@
 # Algorithmic Autopsy
 
-**Algorithmic Autopsy** is an interactive installation presented as a form of algorithmic fortune-telling. A webcam image is analysed by MediaPipe and DeepFace, and the resulting facial measurements and demographic predictions are mapped into a unique cybernetic astrolabe. Under selected classifications, the interface issues a fictional “privilege card” based on documented examples of bias in automated systems.
+**Algorithmic Autopsy** is an interactive visual installation built with p5.js, Python, MediaPipe and DeepFace.
 
-The work treats model predictions as a critical artistic material, not as objective descriptions of a person. Inferred race, gender, age and emotion are uncertain model outputs and must not be treated as biological truth or fair measures of identity.
+## Description
 
-## Project structure
+Algorithmic Autopsy presents facial classification as a kind of algorithmic fortune-telling. A webcam analyses a participant's face and turns facial measurements and machine-generated classifications into a unique cybernetic astrolabe.
 
-```text
-index.html          Browser entry point and web-font loading
-sketch.js           Data state, camera polling and p5.js main loop
-astrolabe.js        Astrolabe geometry, animation and interface drawing
-card.js              Privilege-card rules, content and drawing
-camera_bridge.py     Shared webcam pipeline for MediaPipe and DeepFace
-requirements.txt     Reproducible Python dependencies
-.vscode/settings.json  Prevents Live Server reloads when JSON changes
-```
+The project explores how AI reduces complex and fluid identities to fixed categories. When selected classifications are detected, the system issues a fictional “privilege card” based on documented cases of bias in areas such as employment, healthcare, advertising and finance.
 
-`live-face-data.json` is generated at runtime and is deliberately excluded from Git because it contains biometric-analysis output.
+The work does not present race, gender, age or emotion predictions as biological facts. Instead, it uses their uncertainty and bias as critical artistic material. It asks who benefits when social assumptions are presented as objective data.
 
-## Requirements
+## Interaction Guide
 
-- Python **3.11**
-- A webcam
-- A Chromium-based browser
-- Internet access on the first run. DeepFace downloads model weights, while p5.js and two Google Fonts are currently loaded from CDNs.
+1. Stand in front of the webcam and allow the system to analyse your face.
+2. Observe how your facial data is translated into a unique astrolabe.
+3. Change your appearance with stickers, make-up, glasses or a different hairstyle.
+4. Compare how the machine changes its classification.
+5. If selected conditions are detected, the system may issue a fictional privilege card.
 
-The submitted dependency versions were tested on Apple Silicon macOS with Python 3.11.2. Other platforms may require platform-specific TensorFlow or JAX packages.
+## How to Run
 
-## Installation
+This project requires **Python 3.11**, a webcam and a modern browser.
 
-Clone or download this repository, then open a terminal inside the project folder.
+### 1. Install the Python environment
 
-### macOS or Linux
+Open a terminal inside the project folder.
+
+#### macOS or Linux
 
 ```bash
 python3.11 -m venv .venv
@@ -40,7 +35,7 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-### Windows PowerShell
+#### Windows PowerShell
 
 ```powershell
 py -3.11 -m venv .venv
@@ -49,94 +44,52 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-## Run the live installation
+### 2. Start the camera analysis
 
-Two terminal windows are required.
-
-### Terminal 1 — camera analysis
-
-Activate the virtual environment, then run:
+In the first terminal window, run:
 
 ```bash
 python camera_bridge.py
 ```
 
-The camera is opened once by OpenCV. The same frame is shared with MediaPipe and DeepFace, and their results are written to `live-face-data.json`.
+Allow camera permission when prompted. Press **Q** in the camera window, or **Ctrl+C** in the terminal, to stop it.
 
-To try another camera index:
+If the default camera is unavailable, try:
 
 ```bash
 python camera_bridge.py --camera 1
 ```
 
-To run without the camera preview window:
+### 3. Start the visual interface
 
-```bash
-python camera_bridge.py --no-preview
-```
-
-Press `Q` in the preview window, or `Ctrl+C` in the terminal, to stop the camera bridge.
-
-### Terminal 2 — local web server
-
-From the project folder, run:
+Keep the camera bridge running. Open a second terminal in the same project folder and run:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-On Windows, `python -m http.server 8000` can be used instead.
-
-Open:
+Then open this address in a browser:
 
 ```text
 http://127.0.0.1:8000/index.html
 ```
 
-Do not open `index.html` directly with a `file://` URL. The browser must fetch the live JSON through the local HTTP server.
+Do not open `index.html` directly as a local file. The local server is required for the live data connection.
 
-## Visual demo without a camera
+## Tools Used
 
-Only the local web server is needed. Open the page and use:
+1. **p5.js** — generative graphics, animation and interface rendering
+2. **Python and OpenCV** — webcam capture and data bridge
+3. **MediaPipe Face Mesh** — real-time facial landmark tracking
+4. **DeepFace** — demographic and facial attribute classification
+5. **HTML5 Canvas** — browser-based exhibition display
 
-- `R` or `Space`: generate a random simulated face dataset
-- `Left Arrow` / `Right Arrow`: switch between fixed demonstration datasets
-- `P`: display a random privilege card for visual testing
-- `C`: return to live-camera mode
-- `N`: prepare the system to recognise a new face
-- `M`: enable or disable motion
-- `1` / `2`: switch visual palettes
-- `D`: show or hide debug information
+## Important Note
 
-## Data pipeline
+`live-face-data.json` is generated while the program is running. It contains temporary classifier output and should not be treated as verified personal information.
 
-1. OpenCV captures the webcam once.
-2. MediaPipe Face Mesh measures twelve normalised geometric relationships.
-3. DeepFace predicts age, gender, race and emotion in a background worker.
-4. `camera_bridge.py` combines the two outputs in `live-face-data.json`.
-5. `sketch.js` polls that file and locks a stable face sample.
-6. `astrolabe.js` maps the data into the visual system.
-7. `card.js` evaluates the explicitly authored critical rules and may display a privilege card.
+Model files may be downloaded automatically during the first run, so the initial launch can take longer.
 
-The privilege rules are part of the artwork’s argument. They are not a scientific scoring system and must not be reused to make decisions about people.
+## Author
 
-## Troubleshooting
-
-### `Cannot open camera index 0`
-
-- Close Zoom, Photo Booth and other applications using the webcam.
-- Allow camera access for Terminal or VS Code in the operating-system privacy settings.
-- Try `python camera_bridge.py --camera 1`.
-
-### The first analysis is slow
-
-DeepFace downloads model weights on first use. Keep the internet connection active and wait for the download to finish before restarting.
-
-### The page repeatedly reloads
-
-Use `python3 -m http.server 8000` instead of Live Server. The included VS Code setting also tells Live Server to ignore changes to `live-face-data.json`.
-
-### Typeface differences on another computer
-
-The interface requests the local typeface `AIzaozichunfeng` when available. Its font file is not distributed in this repository. If it is not installed, the browser uses the defined fallback font. Add the licensed `.ttf` file beside `index.html` only if its licence permits redistribution.
-
+Jingyao Li
