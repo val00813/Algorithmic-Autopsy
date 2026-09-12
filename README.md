@@ -18,6 +18,18 @@ The work does not present race, gender, age or emotion predictions as biological
 4. Compare how the machine changes its classification.
 5. If selected conditions are detected, the system may issue a fictional privilege card.
 
+## Online Visual Demo
+
+Open the visual simulation in your browser:
+
+[https://val00813.github.io/Algorithmic-Autopsy/](https://val00813.github.io/Algorithmic-Autopsy/)
+
+Click the screen before using the keyboard controls.
+- Press **R** or **Space** to generate a new astrolabe.
+- Use the **Left** and **Right Arrow** keys to switch between sample datasets.
+
+The online version uses simulated data to demonstrate the visual system. For real-time camera analysis with MediaPipe and DeepFace, follow the local installation instructions below.
+
 ## How to Run
 
 This project requires **Python 3.11**, a webcam and a modern browser.
