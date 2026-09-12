@@ -1,0 +1,14 @@
+# Tested with Python 3.11.2 on Apple Silicon macOS.
+# These versions reproduce the working exhibition environment.
+numpy==1.26.4
+protobuf==4.25.9
+ml-dtypes==0.3.2
+jax==0.4.23
+jaxlib==0.4.23
+opencv-python==4.11.0.86
+opencv-contrib-python==4.11.0.86
+mediapipe==0.10.21
+tensorflow==2.16.2
+tf-keras==2.16.0
+deepface==0.0.100
+

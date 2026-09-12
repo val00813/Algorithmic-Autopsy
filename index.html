@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lagrange Classification Astrolabe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&amp;family=IBM+Plex+Sans+Condensed:wght@100;200;300;400&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @font-face {
+        font-family: "AIzaozichunfeng";
+        src:
+          local("字体家AI造字春风"),
+          local("AIzaozichunfeng"),
+          url("./AIzaozichunfeng.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #050606;
+      }
+
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- p5.js is version-pinned for reproducible rendering. A local copy can
+         replace this CDN URL if the installation must run offline. -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+
+    <!-- Dependency order: card content, visual system, then the controller. -->
+    <script src="./card.js"></script>
+    <script src="./astrolabe.js"></script>
+    <script src="./sketch.js"></script>
+  </body>
+</html>
